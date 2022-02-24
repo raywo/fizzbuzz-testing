@@ -1,10 +1,9 @@
 package de.datev.training.FizzBuzzTesting;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -14,6 +13,7 @@ public class Controller {
 
   final Calculator calculator;
 
+
   public Controller(Calculator calculator) {
     this.calculator = calculator;
   }
@@ -22,5 +22,13 @@ public class Controller {
   @GetMapping(value = "/single/{number}", produces = DEFAULT_MEDIA_TYPE)
   public String single(@PathVariable Integer number) {
     return calculator.calculateSingle(number);
+  }
+
+
+  @GetMapping(value = "/sequence", produces = DEFAULT_MEDIA_TYPE)
+  public Stream<String> sequenceUpTo(
+      @RequestParam(required = false, defaultValue = "100") Integer limit
+  ) {
+    return calculator.calculateUpTo(limit);
   }
 }
