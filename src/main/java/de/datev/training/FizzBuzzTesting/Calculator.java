@@ -2,6 +2,9 @@ package de.datev.training.FizzBuzzTesting;
 
 import org.springframework.stereotype.Service;
 
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 @Service
 public class Calculator {
   public String calculateSingle(Integer number) {
@@ -18,5 +21,11 @@ public class Calculator {
     }
 
     return number.toString();
+  }
+
+
+  public Stream<String> calculateUpTo(Integer limit) {
+    return IntStream.rangeClosed(1, limit)
+        .mapToObj(this::calculateSingle);
   }
 }
